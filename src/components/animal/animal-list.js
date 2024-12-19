@@ -10,7 +10,7 @@ export const AnimalList = () => {
   useEffect(() => {
     console.log("AnimalList: useEffect - getAnimals");
     getAnimals();
-  }, []);
+  }, [getAnimals]);
 
   return (
     <section className="animals">
