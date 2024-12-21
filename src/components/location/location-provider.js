@@ -1,15 +1,15 @@
-import { createContext, useState } from "react";
+import { createContext, useCallback, useState } from "react";
 
 export const LocationContext = createContext();
 
 export const LocationProvider = (props) => {
-  const [location, setLocations] = useState();
+  const [locations, setLocations] = useState([]);
 
-  const getLocations = () => {
+  const getLocations = useCallback(() => {
     return fetch("http://localhost:8088/locations")
       .then((res) => res.json())
       .then(setLocations);
-  };
+  }, []);
 
   const addLocation = (locationObj) => {
     fetch("http://localhost:8088/locations", {
@@ -19,7 +19,7 @@ export const LocationProvider = (props) => {
     }).then(getLocations);
   };
   return (
-    <LocationContext.Provider value={{ location, getLocations, addLocation }}>
+    <LocationContext.Provider value={{ locations, getLocations, addLocation }}>
       {props.children}
     </LocationContext.Provider>
   );

@@ -1,4 +1,4 @@
-import { useState, createContext } from "react";
+import { useState, createContext, useCallback } from "react";
 
 // The context is imported and used by individual components that need data
 export const AnimalContext = createContext();
@@ -7,11 +7,11 @@ export const AnimalContext = createContext();
 export const AnimalProvider = (props) => {
   const [animals, setAnimals] = useState([]);
 
-  const getAnimals = () => {
+  const getAnimals = useCallback(() => {
     return fetch("http://localhost:8088/animals?_expand=location")
       .then((res) => res.json())
       .then(setAnimals);
-  };
+  }, []);
 
   const addAnimal = (animalObj) => {
     return fetch("http://localhost:8088/animals", {
