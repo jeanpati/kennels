@@ -3,7 +3,7 @@ import { createContext, useState } from "react";
 export const LocationContext = createContext();
 
 export const LocationProvider = (props) => {
-  const [locations, setLocations] = useState();
+  const [location, setLocations] = useState();
 
   const getLocations = () => {
     return fetch("http://localhost:8088/locations")
@@ -19,7 +19,7 @@ export const LocationProvider = (props) => {
     }).then(getLocations);
   };
   return (
-    <LocationContext.Provider value={{ locations, getLocations, addLocation }}>
+    <LocationContext.Provider value={{ location, getLocations, addLocation }}>
       {props.children}
     </LocationContext.Provider>
   );
