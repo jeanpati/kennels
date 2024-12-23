@@ -5,6 +5,8 @@ import { AnimalProvider } from "./animal/animal-provider.js";
 import { AnimalList } from "./animal/animal-list.js";
 import { EmployeeProvider } from "./employee/employee-provider.js";
 import { EmployeeList } from "./employee/employee-list.js";
+import { CustomerProvider } from "./customer/customer-provider.js";
+import { CustomerList } from "./customer/customer-list.js";
 
 export const Kennel = () => (
   <>
@@ -19,5 +21,9 @@ export const Kennel = () => (
     <EmployeeProvider>
       <EmployeeList />
     </EmployeeProvider>
+
+    <CustomerProvider>
+      <CustomerList />
+    </CustomerProvider>
   </>
 );
