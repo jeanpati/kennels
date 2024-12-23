@@ -1,10 +1,10 @@
 import React from "react";
-import ReactDOM from "react-dom";
-import { Kennel } from "./components/kennel";
+import ReactDOM from "react-dom/client";
+import { Kennel } from "./components/kennel.js";
 
-ReactDOM.render(
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(
   <React.StrictMode>
     <Kennel />
-  </React.StrictMode>,
-  document.getElementById("root")
+  </React.StrictMode>
 );
