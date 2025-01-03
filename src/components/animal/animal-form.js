@@ -1,9 +1,10 @@
 import React, { useContext, useEffect, useState } from "react";
-import { LocationContext } from "../location/LocationProvider";
-import { AnimalContext } from "../animal/AnimalProvider";
-import { CustomerContext } from "../customer/CustomerProvider";
-import "./Animal.css";
-import { useHistory } from "react-router-dom";
+
+import "./animal.css";
+import { useNavigate } from "react-router-dom";
+import { AnimalContext } from "./animal-provider";
+import { LocationContext } from "../location/location-provider";
+import { CustomerContext } from "../customer/customer-provider";
 
 export const AnimalForm = () => {
   const { addAnimal } = useContext(AnimalContext);
@@ -13,7 +14,7 @@ export const AnimalForm = () => {
   /*
   With React, we do not target the DOM with `document.querySelector()`. Instead, our return (render) reacts to state or props.
 
-  Define the intial state of the form inputs with useState()
+  Define the initial state of the form inputs with useState()
   */
 
   const [animal, setAnimal] = useState({
@@ -22,16 +23,19 @@ export const AnimalForm = () => {
     locationId: 0,
     customerId: 0,
   });
+  const [loading, setLoading] = useState(true); // State to track loading status
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
-  /*
-  Reach out to the world and get customers state
-  and locations state on initialization.
-  */
+  // Fetch customers and locations on component mount
   useEffect(() => {
-    getCustomers().then(getLocations);
-  }, []);
+    Promise.all([getCustomers(), getLocations()])
+      .then(() => setLoading(false)) // Set loading to false once data is fetched
+      .catch((error) => {
+        console.error("Error loading data", error);
+        setLoading(false); // In case of error, stop loading
+      });
+  }, [getCustomers, getLocations]);
 
   //when a field changes, update state. The return will re-render and display based on the values in state
   //Controlled component
@@ -65,9 +69,13 @@ export const AnimalForm = () => {
         locationId: locationId,
         customerId: customerId,
       };
-      addAnimal(newAnimal).then(() => history.push("/animals"));
+      addAnimal(newAnimal).then(() => navigate("/animals"));
     }
   };
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <form className="animalForm">
