@@ -12,8 +12,7 @@ export const EmployeeProvider = (props) => {
   }, []);
 
   const addEmployee = (employeeObj) => {
-    return (fetch("http://localhost:8088/animals"),
-    {
+    return fetch("http://localhost:8088/employees", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

@@ -1,8 +1,11 @@
 import { useContext, useEffect } from "react";
 import { EmployeeContext } from "./employee-provider";
+import { useNavigate } from "react-router-dom";
 
 export const EmployeeList = () => {
   const { employees, getEmployees } = useContext(EmployeeContext);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     getEmployees();
@@ -10,6 +13,13 @@ export const EmployeeList = () => {
 
   return (
     <section className="employees">
+      <button
+        onClick={() => {
+          navigate("/employees/create");
+        }}
+      >
+        Add Employee
+      </button>
       {employees.map((employee) => {
         return (
           <div className="employee" key={`employee--${employee.id}`}>
