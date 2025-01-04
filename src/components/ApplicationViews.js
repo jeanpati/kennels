@@ -74,13 +74,11 @@ export const ApplicationViews = () => {
           exact
           path="/employees/create"
           element={
-            <AnimalProvider>
+            <EmployeeProvider>
               <LocationProvider>
-                <CustomerProvider>
-                  <EmployeeForm />
-                </CustomerProvider>
+                <EmployeeForm />
               </LocationProvider>
-            </AnimalProvider>
+            </EmployeeProvider>
           }
         ></Route>
       </Routes>
